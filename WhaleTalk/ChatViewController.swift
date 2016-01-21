@@ -67,6 +67,7 @@ extension ChatViewController : UITableViewDataSource {
         
         let message = messages[indexPath.row]
         cell.messageLabel.text = message.text
+        cell.incoming(message.incoming)
         
         return cell
     }
