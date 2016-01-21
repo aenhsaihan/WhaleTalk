@@ -64,12 +64,12 @@ class ChatCell: UITableViewCell {
         
         outgoingConstraints = [
             bubbleImageView.trailingAnchor.constraintEqualToAnchor(contentView.trailingAnchor),
-            bubbleImageView.leadingAnchor.constraintGreaterThanOrEqualToAnchor(contentView.centerXAnchor),
+            bubbleImageView.widthAnchor.constraintLessThanOrEqualToAnchor(contentView.widthAnchor, multiplier: 0.76)
         ]
         
         incomingConstraints = [
             bubbleImageView.leadingAnchor.constraintEqualToAnchor(contentView.leadingAnchor),
-            bubbleImageView.trailingAnchor.constraintLessThanOrEqualToAnchor(contentView.centerXAnchor)
+            bubbleImageView.widthAnchor.constraintLessThanOrEqualToAnchor(contentView.widthAnchor, multiplier: 0.76)
         ]
         
         bubbleImageView.topAnchor.constraintEqualToAnchor(contentView.topAnchor, constant: 10).active = true

@@ -24,7 +24,7 @@ class ChatViewController: UIViewController {
         for i in 0...10 {
             let m = Message()
 //            m.text = String(i)
-            m.text = "This is a longer message"
+            m.text = "This is a longer message, what happens if I do this? And then if I do this?"
             m.incoming = localIncoming
             localIncoming = !localIncoming
             messages.append(m)
@@ -34,6 +34,7 @@ class ChatViewController: UIViewController {
         tableView.registerClass(ChatCell.self, forCellReuseIdentifier: cellIdentifier)
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.estimatedRowHeight = 44
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
@@ -48,12 +49,6 @@ class ChatViewController: UIViewController {
         
         NSLayoutConstraint.activateConstraints(tableViewConstraints)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
 
 }
 
@@ -70,6 +65,7 @@ extension ChatViewController : UITableViewDataSource {
         let message = messages[indexPath.row]
         cell.messageLabel.text = message.text
         cell.incoming(message.incoming)
+        cell.separatorInset = UIEdgeInsetsMake(0, tableView.bounds.size.width, 0, 0)
         
         return cell
     }
