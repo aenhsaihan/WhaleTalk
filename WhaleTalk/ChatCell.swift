@@ -43,8 +43,8 @@ class ChatCell: UITableViewCell {
     let messageLabel: UILabel = UILabel()
     private let bubbleImageView = UIImageView()
     
-    private var outgoingConstraint: NSLayoutConstraint!
-    private var incomingConstraint: NSLayoutConstraint!
+    private var outgoingConstraints: [NSLayoutConstraint]!
+    private var incomingConstraints: [NSLayoutConstraint]!
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         
@@ -62,11 +62,18 @@ class ChatCell: UITableViewCell {
         bubbleImageView.widthAnchor.constraintEqualToAnchor(messageLabel.widthAnchor, constant: 50).active = true
         bubbleImageView.heightAnchor.constraintEqualToAnchor(messageLabel.heightAnchor).active = true
         
-        bubbleImageView.topAnchor.constraintEqualToAnchor(contentView.topAnchor).active = true
-
+        outgoingConstraints = [
+            bubbleImageView.trailingAnchor.constraintEqualToAnchor(contentView.trailingAnchor),
+            bubbleImageView.leadingAnchor.constraintGreaterThanOrEqualToAnchor(contentView.centerXAnchor),
+        ]
         
-        outgoingConstraint = bubbleImageView.trailingAnchor.constraintEqualToAnchor(contentView.trailingAnchor)
-        incomingConstraint = bubbleImageView.leadingAnchor.constraintEqualToAnchor(contentView.leadingAnchor)
+        incomingConstraints = [
+            bubbleImageView.leadingAnchor.constraintEqualToAnchor(contentView.leadingAnchor),
+            bubbleImageView.trailingAnchor.constraintLessThanOrEqualToAnchor(contentView.centerXAnchor)
+        ]
+        
+        bubbleImageView.topAnchor.constraintEqualToAnchor(contentView.topAnchor, constant: 10).active = true
+        bubbleImageView.bottomAnchor.constraintEqualToAnchor(contentView.bottomAnchor, constant: -10).active = true
         
         messageLabel.textAlignment = .Center
         messageLabel.numberOfLines = 0
@@ -92,12 +99,12 @@ class ChatCell: UITableViewCell {
     func incoming(incoming: Bool) {
         
         if incoming {
-            incomingConstraint.active = true
-            outgoingConstraint.active = false
+            NSLayoutConstraint.deactivateConstraints(outgoingConstraints)
+            NSLayoutConstraint.activateConstraints(incomingConstraints)
             bubbleImageView.image = bubble.incoming
         } else {
-            incomingConstraint.active = false
-            outgoingConstraint.active = true
+            NSLayoutConstraint.deactivateConstraints(incomingConstraints)
+            NSLayoutConstraint.activateConstraints(outgoingConstraints)
             bubbleImageView.image = bubble.outgoing
         }
     }
