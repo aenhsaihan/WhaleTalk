@@ -23,7 +23,8 @@ class ChatViewController: UIViewController {
         
         for i in 0...10 {
             let m = Message()
-            m.text = String(i)
+//            m.text = String(i)
+            m.text = "This is a longer message"
             m.incoming = localIncoming
             localIncoming = !localIncoming
             messages.append(m)
@@ -32,6 +33,7 @@ class ChatViewController: UIViewController {
         
         tableView.registerClass(ChatCell.self, forCellReuseIdentifier: cellIdentifier)
         tableView.dataSource = self
+        tableView.delegate = self
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
@@ -73,7 +75,14 @@ extension ChatViewController : UITableViewDataSource {
     }
 }
 
-
+extension ChatViewController: UITableViewDelegate {
+    
+    func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return false
+    }
+    
+    
+}
 
 
 

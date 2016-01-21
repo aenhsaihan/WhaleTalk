@@ -8,6 +8,36 @@
 
 import UIKit
 
+struct BubbleConstants {
+    
+    struct Insets {
+        
+        static let topInset : CGFloat              = 17.0
+        static let bottomInset : CGFloat           = 17.5
+        
+        static let incomingLeftInset : CGFloat     = 26.5
+        static let outgoingLeftInset : CGFloat     = 21
+        
+        static let incomingRightInset : CGFloat    = 21
+        static let outgoingRightInset : CGFloat    = 26.5
+        
+    }
+    
+    struct RGBAlpha {
+        
+        static let incomingRed : CGFloat            = 229/255
+        static let incomingBlue : CGFloat           = 229/255
+        static let incomingGreen : CGFloat          = 229/255
+        static let incomingAlpha : CGFloat          = 1
+        
+        static let outgoingRed : CGFloat            = 0/255
+        static let outgoingBlue : CGFloat           = 122/255
+        static let outgoingGreen : CGFloat          = 255/255
+        static let outgoingAlpha : CGFloat          = 1
+    }
+    
+}
+
 class ChatCell: UITableViewCell {
 
     let messageLabel: UILabel = UILabel()
@@ -41,11 +71,6 @@ class ChatCell: UITableViewCell {
         messageLabel.textAlignment = .Center
         messageLabel.numberOfLines = 0
         
-//        let image = UIImage(named: "MessageBubble")?.imageWithRenderingMode(.AlwaysTemplate)
-//        bubbleImageView.tintColor = UIColor.blueColor()
-//        bubbleImageView.image = image
-        
-        
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -54,10 +79,12 @@ class ChatCell: UITableViewCell {
     
     /**
      
-     Activates either incoming/outgoing constraint on bubbleImageView
+     Configure cell based on incoming status of message
      
      Activate leading or trailing constraint on bubbleView depending on whether it is incoming/outgoing.
      Both constraints are pinned to the anchor of the contentView, which is the cell of the tableView
+     
+     Set the appropriate image on the cell for incoming/outgoing message
      
      - Parameter incoming: See if message is incoming/outgoing
      
@@ -82,10 +109,13 @@ let bubble = makeBubble()
 func makeBubble() -> (incoming: UIImage, outgoing: UIImage) {
     let image = UIImage(named: "MessageBubble")!
     
-    let outgoing = coloredImage(image, red: 0/255, green: 122/255, blue: 255/255, alpha: 1)
+    let insetsIncoming = UIEdgeInsets(top: BubbleConstants.Insets.topInset, left: BubbleConstants.Insets.incomingLeftInset, bottom: BubbleConstants.Insets.bottomInset, right: BubbleConstants.Insets.incomingRightInset)
+    let insetsOutgoing = UIEdgeInsets(top: BubbleConstants.Insets.topInset, left: BubbleConstants.Insets.outgoingLeftInset, bottom: BubbleConstants.Insets.bottomInset, right: BubbleConstants.Insets.outgoingRightInset)
+    
+    let outgoing = coloredImage(image, red: BubbleConstants.RGBAlpha.outgoingRed, green: BubbleConstants.RGBAlpha.outgoingGreen, blue: BubbleConstants.RGBAlpha.outgoingBlue, alpha: BubbleConstants.RGBAlpha.outgoingAlpha).resizableImageWithCapInsets(insetsOutgoing)
     let flippedImage = UIImage(CGImage: image.CGImage!, scale: image.scale, orientation: UIImageOrientation.UpMirrored)
     
-    let incoming = coloredImage(flippedImage, red: 229/255, green: 229/255, blue: 229/255, alpha: 1)
+    let incoming = coloredImage(flippedImage, red: BubbleConstants.RGBAlpha.incomingRed, green: BubbleConstants.RGBAlpha.incomingGreen, blue: BubbleConstants.RGBAlpha.incomingBlue, alpha: BubbleConstants.RGBAlpha.incomingAlpha).resizableImageWithCapInsets(insetsIncoming)
     
     return (incoming, outgoing)
 }
