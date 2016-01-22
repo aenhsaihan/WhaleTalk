@@ -15,6 +15,9 @@ class ChatViewController: UIViewController {
     private let newMessageField = UITextView()
     
     private var messages = [Message]()
+    
+    private var bottomConstraint : NSLayoutConstraint!
+    
     private let cellIdentifier = "Cell"
 
     override func viewDidLoad() {
@@ -36,6 +39,8 @@ class ChatViewController: UIViewController {
         self.layoutMessageArea()
         
         self.configureTableView()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification , object: nil)
     }
     
     func layoutMessageArea() {
@@ -55,11 +60,13 @@ class ChatViewController: UIViewController {
         
         sendButton.setContentHuggingPriority(251, forAxis: .Horizontal)
         
+        bottomConstraint = newMessageArea.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor)
+        bottomConstraint.active = true
+        
         let messageAreaConstraints : [NSLayoutConstraint] = [
             
             newMessageArea.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor),
             newMessageArea.trailingAnchor.constraintEqualToAnchor(view.trailingAnchor),
-            newMessageArea.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor),
             newMessageArea.heightAnchor.constraintEqualToAnchor(newMessageField.heightAnchor, constant: 20),
             
             newMessageField.leadingAnchor.constraintEqualToAnchor(newMessageArea.leadingAnchor, constant: 10),
@@ -94,6 +101,20 @@ class ChatViewController: UIViewController {
         ]
         
         NSLayoutConstraint.activateConstraints(tableViewConstraints)
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        if let
+            userInfo = notification.userInfo,
+            frame = userInfo[UIKeyboardFrameEndUserInfoKey]?.CGRectValue,
+            animationDuration = userInfo[UIKeyboardAnimationDurationUserInfoKey]?.doubleValue {
+                
+                let newFrame = view.convertRect(frame, fromView: (UIApplication.sharedApplication().delegate?.window!))
+                bottomConstraint.constant = newFrame.origin.y - CGRectGetHeight(view.frame)
+                UIView.animateWithDuration(animationDuration, animations: { () -> Void in
+                    self.view.layoutIfNeeded()
+                })
+        }
     }
 
 }
