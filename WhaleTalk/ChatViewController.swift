@@ -235,6 +235,45 @@ extension ChatViewController : UITableViewDataSource {
         
         return cell
     }
+    
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let view = UIView()
+        view.backgroundColor = UIColor.clearColor()
+        
+        let paddingView = UIView()
+        view.addSubview(paddingView)
+        paddingView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let dateLabel = UILabel()
+        paddingView.addSubview(dateLabel)
+        dateLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        let constraints : [NSLayoutConstraint] = [
+            paddingView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
+            paddingView.centerYAnchor.constraintEqualToAnchor(view.centerYAnchor),
+            
+            dateLabel.centerXAnchor.constraintEqualToAnchor(paddingView.centerXAnchor),
+            dateLabel.centerYAnchor.constraintEqualToAnchor(paddingView.centerYAnchor),
+            
+            paddingView.heightAnchor.constraintEqualToAnchor(dateLabel.heightAnchor, constant: 5),
+            paddingView.widthAnchor.constraintEqualToAnchor(dateLabel.widthAnchor, constant: 10),
+            
+            view.heightAnchor.constraintEqualToAnchor(paddingView.heightAnchor)
+        ]
+        
+        NSLayoutConstraint.activateConstraints(constraints)
+        
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "MMM dd, YYYY"
+        dateLabel.text = formatter.stringFromDate(dates[section])
+        
+        paddingView.layer.cornerRadius = 10
+        paddingView.layer.masksToBounds = true
+        paddingView.backgroundColor = UIColor(red: 153/255, green: 204/255, blue: 255/255, alpha: 1.0)
+        
+        return view
+    }
 }
 
 extension ChatViewController: UITableViewDelegate {
