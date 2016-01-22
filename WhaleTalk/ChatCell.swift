@@ -60,7 +60,7 @@ class ChatCell: UITableViewCell {
         messageLabel.centerYAnchor.constraintEqualToAnchor(bubbleImageView.centerYAnchor).active = true
         
         bubbleImageView.widthAnchor.constraintEqualToAnchor(messageLabel.widthAnchor, constant: 50).active = true
-        bubbleImageView.heightAnchor.constraintEqualToAnchor(messageLabel.heightAnchor).active = true
+        bubbleImageView.heightAnchor.constraintEqualToAnchor(messageLabel.heightAnchor, constant: 20).active = true
         
         outgoingConstraints = [
             bubbleImageView.trailingAnchor.constraintEqualToAnchor(contentView.trailingAnchor),
