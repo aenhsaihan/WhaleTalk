@@ -40,12 +40,12 @@ class ChatViewController: UIViewController {
         
         self.configureTableView()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification , object: nil)
+        self.addKeyboardObservers()
         
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
-        tapRecognizer.numberOfTapsRequired = 1
-        view.addGestureRecognizer(tapRecognizer)
+        self.addTapRecognizerToDismissKeyboard()
     }
+    
+    // MARK: View configuration and layout
     
     func layoutMessageArea() {
         
@@ -63,6 +63,7 @@ class ChatViewController: UIViewController {
         newMessageArea.addSubview(sendButton)
         
         sendButton.setContentHuggingPriority(251, forAxis: .Horizontal)
+        sendButton.setContentCompressionResistancePriority(751, forAxis: .Horizontal)
         
         bottomConstraint = newMessageArea.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor)
         bottomConstraint.active = true
@@ -107,7 +108,22 @@ class ChatViewController: UIViewController {
         NSLayoutConstraint.activateConstraints(tableViewConstraints)
     }
     
-    func keyboardWillShow(notification: NSNotification) {
+    //MARK: Gesture Recognizer
+
+    
+    func handleSingleTap(recognizer: UITapGestureRecognizer) {
+        view.endEditing(true)
+    }
+    
+    func addTapRecognizerToDismissKeyboard() {
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
+        tapRecognizer.numberOfTapsRequired = 1
+        view.addGestureRecognizer(tapRecognizer)
+    }
+    
+    //MARK: Keyboard notifications
+
+    func updateBottomConstraint(notification: NSNotification) {
         if let
             userInfo = notification.userInfo,
             frame = userInfo[UIKeyboardFrameEndUserInfoKey]?.CGRectValue,
@@ -121,10 +137,18 @@ class ChatViewController: UIViewController {
         }
     }
     
-    func handleSingleTap(recognizer: UITapGestureRecognizer) {
-        view.endEditing(true)
+    func keyboardWillShow(notification: NSNotification) {
+        self.updateBottomConstraint(notification)
     }
-
+    
+    func keyboardWillHide(notification: NSNotification) {
+        self.updateBottomConstraint(notification)
+    }
+    
+    func addKeyboardObservers() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification , object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
+    }
 }
 
 extension ChatViewController : UITableViewDataSource {
