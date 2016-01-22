@@ -60,6 +60,7 @@ class ChatViewController: UIViewController {
         let sendButton = UIButton()
         sendButton.translatesAutoresizingMaskIntoConstraints = false
         sendButton.setTitle("Send", forState: .Normal)
+        sendButton.addTarget(self, action: Selector("pressedSend:"), forControlEvents: .TouchUpInside)
         newMessageArea.addSubview(sendButton)
         
         sendButton.setContentHuggingPriority(251, forAxis: .Horizontal)
@@ -148,6 +149,18 @@ class ChatViewController: UIViewController {
     func addKeyboardObservers() {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification , object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    // MARK: Send message
+    
+    func pressedSend(button: UIButton) {
+        guard let text = newMessageField.text where text.characters.count > 0 else {return}
+        let message = Message()
+        message.text = text
+        message.incoming = false
+        messages.append(message)
+        tableView.reloadData()
+        tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: tableView.numberOfRowsInSection(0)-1, inSection: 0), atScrollPosition: .Bottom, animated: true)
     }
 }
 
