@@ -41,6 +41,10 @@ class ChatViewController: UIViewController {
         self.configureTableView()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification , object: nil)
+        
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
+        tapRecognizer.numberOfTapsRequired = 1
+        view.addGestureRecognizer(tapRecognizer)
     }
     
     func layoutMessageArea() {
@@ -115,6 +119,10 @@ class ChatViewController: UIViewController {
                     self.view.layoutIfNeeded()
                 })
         }
+    }
+    
+    func handleSingleTap(recognizer: UITapGestureRecognizer) {
+        view.endEditing(true)
     }
 
 }
