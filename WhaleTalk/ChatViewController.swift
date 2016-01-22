@@ -45,6 +45,11 @@ class ChatViewController: UIViewController {
         self.addTapRecognizerToDismissKeyboard()
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        tableView.scrollToBottom()
+    }
+    
     // MARK: View configuration and layout
     
     func layoutMessageArea() {
@@ -159,8 +164,10 @@ class ChatViewController: UIViewController {
         message.text = text
         message.incoming = false
         messages.append(message)
+        newMessageField.text = nil
         tableView.reloadData()
-        tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: tableView.numberOfRowsInSection(0)-1, inSection: 0), atScrollPosition: .Bottom, animated: true)
+        tableView.scrollToBottom()
+        view.endEditing(true)
     }
 }
 
