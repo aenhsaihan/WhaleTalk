@@ -29,24 +29,7 @@ class ChatViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        var localIncoming = true
-        var date = NSDate(timeIntervalSince1970: 1100000000)
-        
-        for i in 0...10 {
-            let m = Message()
-            m.text = "This is a longer message, what happens if I do this? And then if I do this?"
-            m.timeStamp = date
-            m.incoming = localIncoming
-            localIncoming = !localIncoming
-            
-            
-            addMessage(m)
-            
-            if i % 2 == 0 {
-                date = NSDate(timeInterval: 60 * 60 * 24, sinceDate: date)
-            }
-            
-        }
+        self.createLocalMessages()
         
         self.layoutMessageArea()
         
@@ -60,6 +43,29 @@ class ChatViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         tableView.scrollToBottom()
+    }
+    
+    func createLocalMessages() {
+        var localIncoming = true
+        var date = NSDate(timeIntervalSince1970: 1100000000)
+        
+        for i in 0...10 {
+            let m = Message()
+            m.text = "\(i) This is a longer message, what happens if I do this? And then if I do this?"
+            m.timeStamp = date
+            m.incoming = localIncoming
+            localIncoming = !localIncoming
+            
+            
+            addMessage(m)
+            
+            if i % 2 == 0 {
+                // adding a day's time to every other message
+                // which means that there will be two messages for each day
+                date = NSDate(timeInterval: 60 * 60 * 24, sinceDate: date)
+            }
+            
+        }
     }
     
     // MARK: View configuration and layout
@@ -111,6 +117,10 @@ class ChatViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.estimatedRowHeight = 44
+        
+        // header config
+        tableView.sectionHeaderHeight = UITableViewAutomaticDimension
+        tableView.estimatedSectionHeaderHeight = 25
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
@@ -197,11 +207,16 @@ class ChatViewController: UIViewController {
         
         // if there are no messages for the day
         if messages == nil {
+            // add new day to dates array
             dates.append(startDay)
             messages = [Message]()
         }
         messages!.append(message)
         sections[startDay] = messages
+        
+        // have an array of days
+        // add day as a key to sections, which will contain array of messages
+        // add message to messages array, and create key-value pair in sections
     }
 }
 
@@ -273,6 +288,18 @@ extension ChatViewController : UITableViewDataSource {
         paddingView.backgroundColor = UIColor(red: 153/255, green: 204/255, blue: 255/255, alpha: 1.0)
         
         return view
+    }
+    
+    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        
+        let footer = UIView()
+        footer.backgroundColor = UIColor.blackColor()
+        
+        return footer
+    }
+    
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 10
     }
 }
 
