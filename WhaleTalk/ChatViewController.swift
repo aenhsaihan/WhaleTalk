@@ -293,13 +293,12 @@ extension ChatViewController : UITableViewDataSource {
     func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
         let footer = UIView()
-        footer.backgroundColor = UIColor.blackColor()
         
         return footer
     }
     
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 10
+        return 0.01
     }
 }
 
