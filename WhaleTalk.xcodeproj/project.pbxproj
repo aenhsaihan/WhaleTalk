@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		29178A721C54495600665173 /* CDHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29178A711C54495600665173 /* CDHelper.swift */; };
+		29178A751C54519C00665173 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 29178A731C54519C00665173 /* Model.xcdatamodeld */; };
 		299180941C5009280027EAEB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299180931C5009280027EAEB /* AppDelegate.swift */; };
 		299180961C5009280027EAEB /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299180951C5009280027EAEB /* ChatViewController.swift */; };
 		299180991C5009280027EAEB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 299180971C5009280027EAEB /* Main.storyboard */; };
@@ -20,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		29178A711C54495600665173 /* CDHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CDHelper.swift; sourceTree = "<group>"; };
+		29178A741C54519C00665173 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		299180901C5009280027EAEB /* WhaleTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhaleTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		299180931C5009280027EAEB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		299180951C5009280027EAEB /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 				299180A71C5014150027EAEB /* ChatCell.swift */,
 				299180A91C5287D40027EAEB /* UITableView+Scroll.swift */,
 				29178A711C54495600665173 /* CDHelper.swift */,
+				29178A731C54519C00665173 /* Model.xcdatamodeld */,
 				299180971C5009280027EAEB /* Main.storyboard */,
 				2991809A1C5009280027EAEB /* Assets.xcassets */,
 				2991809C1C5009280027EAEB /* LaunchScreen.storyboard */,
@@ -150,6 +153,7 @@
 				299180AA1C5287D40027EAEB /* UITableView+Scroll.swift in Sources */,
 				299180A61C500ADE0027EAEB /* Message.swift in Sources */,
 				29178A721C54495600665173 /* CDHelper.swift in Sources */,
+				29178A751C54519C00665173 /* Model.xcdatamodeld in Sources */,
 				299180A81C5014150027EAEB /* ChatCell.swift in Sources */,
 				299180961C5009280027EAEB /* ChatViewController.swift in Sources */,
 				299180941C5009280027EAEB /* AppDelegate.swift in Sources */,
@@ -305,6 +309,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		29178A731C54519C00665173 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				29178A741C54519C00665173 /* Model.xcdatamodel */,
+			);
+			currentVersion = 29178A741C54519C00665173 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 299180881C5009280027EAEB /* Project object */;
 }
