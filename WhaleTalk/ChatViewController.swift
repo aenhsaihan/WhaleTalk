@@ -32,8 +32,6 @@ class ChatViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        self.createLocalMessages()
-        
         self.layoutMessageArea()
         
         self.configureTableView()
@@ -46,29 +44,6 @@ class ChatViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         tableView.scrollToBottom()
-    }
-    
-    func createLocalMessages() {
-        var localIncoming = true
-        var date = NSDate(timeIntervalSince1970: 1100000000)
-        
-        for i in 0...10 {
-            let m = Message()
-            m.text = "\(i) This is a longer message, what happens if I do this? And then if I do this?"
-            m.timeStamp = date
-            m.incoming = localIncoming
-            localIncoming = !localIncoming
-            
-            
-            addMessage(m)
-            
-            if i % 2 == 0 {
-                // adding a day's time to every other message
-                // which means that there will be two messages for each day
-                date = NSDate(timeInterval: 60 * 60 * 24, sinceDate: date)
-            }
-            
-        }
     }
     
     // MARK: View configuration and layout
@@ -131,7 +106,7 @@ class ChatViewController: UIViewController {
         
         let tableViewConstraints: [NSLayoutConstraint] = [
             
-            tableView.topAnchor.constraintEqualToAnchor(view.topAnchor),
+            tableView.topAnchor.constraintEqualToAnchor(topLayoutGuide.bottomAnchor),
             tableView.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor),
             tableView.trailingAnchor.constraintEqualToAnchor(view.trailingAnchor),
             tableView.bottomAnchor.constraintEqualToAnchor(newMessageArea.topAnchor)
@@ -191,10 +166,11 @@ class ChatViewController: UIViewController {
     
     func pressedSend(button: UIButton) {
         guard let text = newMessageField.text where text.characters.count > 0 else {return}
-        let message = Message()
+        guard let context = context else {return}
+        guard let message = NSEntityDescription.insertNewObjectForEntityForName("Message", inManagedObjectContext: context) as? Message else {return}
         message.text = text
-        message.incoming = false
-        message.timeStamp = NSDate()
+        message.isIncoming = false
+        message.timestamp = NSDate()
         addMessage(message)
         newMessageField.text = nil
         tableView.reloadData()
@@ -203,7 +179,7 @@ class ChatViewController: UIViewController {
     }
     
     func addMessage(message: Message) {
-        guard let date = message.timeStamp else {return}
+        guard let date = message.timestamp else {return}
         let calendar = NSCalendar.currentCalendar()
         let startDay = calendar.startOfDayForDate(date)
         
@@ -247,7 +223,7 @@ extension ChatViewController : UITableViewDataSource {
         let message = messages[indexPath.row]
         cell.messageLabel.text = message.text
         
-        cell.incoming(message.incoming)
+        cell.incoming(message.isIncoming)
         
         cell.backgroundColor = UIColor.clearColor()
         
