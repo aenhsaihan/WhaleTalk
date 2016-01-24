@@ -32,6 +32,17 @@ class ChatViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        do {
+            let request = NSFetchRequest(entityName: "Message")
+            if let result = try context?.executeFetchRequest(request) as? [Message] {
+                for message in result {
+                    addMessage(message)
+                }
+            }
+        } catch {
+            print("We couldn't fetch!")
+        }
+        
         self.layoutMessageArea()
         
         self.configureTableView()
@@ -172,6 +183,14 @@ class ChatViewController: UIViewController {
         message.isIncoming = false
         message.timestamp = NSDate()
         addMessage(message)
+        
+        do {
+            try context.save()
+        } catch {
+            print("There was a problem saving")
+            return
+        }
+        
         newMessageField.text = nil
         tableView.reloadData()
         tableView.scrollToBottom()
