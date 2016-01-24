@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		29178A721C54495600665173 /* CDHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29178A711C54495600665173 /* CDHelper.swift */; };
 		299180941C5009280027EAEB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299180931C5009280027EAEB /* AppDelegate.swift */; };
 		299180961C5009280027EAEB /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299180951C5009280027EAEB /* ChatViewController.swift */; };
 		299180991C5009280027EAEB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 299180971C5009280027EAEB /* Main.storyboard */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		29178A711C54495600665173 /* CDHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CDHelper.swift; sourceTree = "<group>"; };
 		299180901C5009280027EAEB /* WhaleTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhaleTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		299180931C5009280027EAEB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		299180951C5009280027EAEB /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
@@ -65,6 +67,7 @@
 				299180A51C500ADE0027EAEB /* Message.swift */,
 				299180A71C5014150027EAEB /* ChatCell.swift */,
 				299180A91C5287D40027EAEB /* UITableView+Scroll.swift */,
+				29178A711C54495600665173 /* CDHelper.swift */,
 				299180971C5009280027EAEB /* Main.storyboard */,
 				2991809A1C5009280027EAEB /* Assets.xcassets */,
 				2991809C1C5009280027EAEB /* LaunchScreen.storyboard */,
@@ -146,6 +149,7 @@
 			files = (
 				299180AA1C5287D40027EAEB /* UITableView+Scroll.swift in Sources */,
 				299180A61C500ADE0027EAEB /* Message.swift in Sources */,
+				29178A721C54495600665173 /* CDHelper.swift in Sources */,
 				299180A81C5014150027EAEB /* ChatCell.swift in Sources */,
 				299180961C5009280027EAEB /* ChatViewController.swift in Sources */,
 				299180941C5009280027EAEB /* AppDelegate.swift in Sources */,
@@ -298,6 +302,7 @@
 				299180A41C5009280027EAEB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

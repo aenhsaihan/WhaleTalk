@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ChatViewController: UIViewController {
     
@@ -24,6 +25,8 @@ class ChatViewController: UIViewController {
     
     // Constants
     private let cellIdentifier = "Cell"
+    
+    var context: NSManagedObjectContext?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -117,6 +120,7 @@ class ChatViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.estimatedRowHeight = 44
+        tableView.separatorStyle = .None
         
         // header config
         tableView.sectionHeaderHeight = UITableViewAutomaticDimension
@@ -238,7 +242,6 @@ extension ChatViewController : UITableViewDataSource {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! ChatCell
-        cell.separatorInset = UIEdgeInsetsMake(0, tableView.bounds.size.width, 0, 0)
         
         let messages = getMessages(indexPath.section)
         let message = messages[indexPath.row]
